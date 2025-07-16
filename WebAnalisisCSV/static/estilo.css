@@ -1,0 +1,40 @@
+
+body{
+    font-family: Consolas, monospace;
+}
+#tituloTipeado, #uploadForm, h2{
+
+text-align: center;
+}
+
+button {
+    background-color: #4CAF50;  /* Verde suave */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #45a049;  /* Verde un poco más oscuro al pasar el mouse */
+    transform: scale(1.05);     /* Efecto de agrandar levemente */
+}
+
+button:active {
+    transform: scale(0.97);     /* Efecto al presionar */
+}
+
+#estiloInput{
+    color: white;
+    font-size: 16px;
+    background-color: #45a049;
+    padding: 1%;
+    border-radius: 20px;
+}
+#estiloInput:hover{
+    background-color: black;
+    transition: 1s;
+}

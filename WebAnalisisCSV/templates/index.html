@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/estilo.css">
+    <title>Analizador de CSV</title>
+</head>
+<body>
+    <h1 id="tituloTipeado"></h1>
+
+ <form id="uploadForm">
+        <input type="file" id="fileInput" name="file" accept=".csv" required hidden>
+        <label for="fileInput" id="estiloInput">Seleccionar CSV</label>
+        <span id="fileName">No se ha seleccionado ningun archivo</span>
+        <br><br>
+        <button type="submit">Subir y Generar</button>
+    </form>
+
+    <h2>Resultados:</h2>
+    <div id="metrics"></div>
+    <img id="wordcloudImage" src="" alt="Nube de palabras aparecerá aquí" style="max-width: 800px; margin-top: 20px;">
+
+
+
+<script src="/static/js.js"></script>
+</body>
+</html>
