@@ -1,18 +1,18 @@
 
-    console.log("prueba")
-    const titleText = 'Subir CSV y Generar Nube de Palabras';
-    const titleElement = document.getElementById('tituloTipeado');
-    let index = 0;
+console.log("prueba")
+const titleText = 'Subir CSV y Generar Nube de Palabras';
+const titleElement = document.getElementById('tituloTipeado');
+let index = 0;
 
-    function typeWriter() {
-        if (index < titleText.length) {
-            titleElement.textContent += titleText.charAt(index);
-            index++;
-            setTimeout(typeWriter, 100);  // velocidad de escritura (en ms)
-        }
+function typeWriter() {
+    if (index < titleText.length) {
+        titleElement.textContent += titleText.charAt(index);
+        index++;
+        setTimeout(typeWriter, 100);  // velocidad de escritura (en ms)
     }
+}
 
-    window.onload = () => {
+window.onload = () => {
     typeWriter();
 
     // Control de input file personalizado
@@ -31,41 +31,48 @@
     });
 
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (fileInput.files.length === 0) {
-            alert('Por favor selecciona un archivo CSV.');
+    e.preventDefault();
+
+    if (fileInput.files.length === 0) {
+        alert('Por favor selecciona un archivo CSV.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+
+    metricsDiv.innerHTML = 'Procesando...';
+    wordcloudImage.src = '';
+
+    try {
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        let data;
+
+        try {
+            data = await response.json();
+        } catch (jsonError) {
+            metricsDiv.innerHTML = `<p style="color:red;">Respuesta no válida del servidor.</p>`;
             return;
         }
-        const formData = new FormData();
-        formData.append('file', fileInput.files[0]);
 
-        metricsDiv.innerHTML = 'Procesando...';
-        wordcloudImage.src = '';
-
-        try {console.log('📤 Enviando POST a /upload');
-
-            const response = await fetch('/upload', {
-                method: 'POST',
-                body: formData
-                
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                metricsDiv.innerHTML = `<p style="color:red;">Error: ${errorData.error || 'Error desconocido'}</p>`;
-                return;
-            }
-
-            const data = await response.json();
-
-            wordcloudImage.src = data.image_url + '?t=' + new Date().getTime(); // evitar cache
-            metricsDiv.innerHTML = `
-                <p>Filas del CSV: ${data.metrics.filas}</p>
-                <p>Columnas del CSV: ${data.metrics.columnas}</p>
-                <p>Total de palabras: ${data.metrics.palabras_totales}</p>
-            `;
-        } catch (error) {
-            metricsDiv.innerHTML = `<p style="color:red;">Error de conexión: ${error.message}</p>`;
+        if (!response.ok) {
+            metricsDiv.innerHTML = `<p style="color:red;">Error: ${data.error || 'Error desconocido.'}</p>`;
+            return;
         }
-    });
+
+        wordcloudImage.src = data.image_url + '?t=' + new Date().getTime();
+        metricsDiv.innerHTML = `
+            <p>Filas del CSV: ${data.metrics.filas}</p>
+            <p>Columnas del CSV: ${data.metrics.columnas}</p>
+            <p>Total de palabras: ${data.metrics.palabras_totales}</p>
+        `;
+
+    } catch (error) {
+        metricsDiv.innerHTML = `<p style="color:red;">Error de conexión: ${error.message}</p>`;
+    }
+});;
 };
