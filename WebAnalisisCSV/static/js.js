@@ -66,16 +66,12 @@ window.onload = () => {
 
         wordcloudImage.src = data.image_url + '?t=' + new Date().getTime();
         metricsDiv.innerHTML = `
-            <p>Filas del CSV: ${data.metrics.filas}</p>
-            <p>Columnas del CSV: ${data.metrics.columnas}</p>
-            <p>Total de palabras: ${data.metrics.palabras_totales}</p>
-            ` 
-
-            for (let i = 0; i < data.metrics.columnas.length; i++) {
+               <p><strong>Filas:</strong> ${data.metrics.filas}</p>
+                <p><strong>Columnas:</strong> ${data.metrics.columnas.length}</p>
+                <p><strong>Total de palabras:</strong> ${data.metrics.palabras_totales}</p>
+                <p><strong>Institucion:</strong> ${data.metrics.institucion}</p>`    
                 
-            `<p>columnas: ${data.metrics.columnas}</p>`    
-                
-            }
+            
             ;
 
     } catch (error) {
