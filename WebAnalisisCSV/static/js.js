@@ -69,7 +69,14 @@ window.onload = () => {
             <p>Filas del CSV: ${data.metrics.filas}</p>
             <p>Columnas del CSV: ${data.metrics.columnas}</p>
             <p>Total de palabras: ${data.metrics.palabras_totales}</p>
-        `;
+            ` 
+
+            for (let i = 0; i < data.metrics.columnas.length; i++) {
+                
+            `<p>columnas: ${data.metrics.columnas}</p>`    
+                
+            }
+            ;
 
     } catch (error) {
         metricsDiv.innerHTML = `<p style="color:red;">Error de conexión: ${error.message}</p>`;

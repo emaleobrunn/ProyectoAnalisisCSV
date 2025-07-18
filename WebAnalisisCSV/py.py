@@ -54,9 +54,11 @@ def upload_file():
         metrics = {
             'filas': int(df.shape[0]),
             'columnas': int(df.shape[1]),
-            'palabras_totales': int(len(text_data.split()))
+            'palabras_totales': int(len(text_data.split())),
+            'columnas': str(df.columns)
+            
         }
-
+        print(df.columns)
         # Devolver ruta pública de la imagen
         return jsonify({
             'image_url': '/static/wordcloud.png',
